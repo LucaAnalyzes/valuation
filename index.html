@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora de Valuation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    label {
+      margin-top: 10px;
+      display: block;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .valuation {
+      display: none;
+      margin-top: 20px;
+      background: #e6ffe6;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #aaffaa;
+    }
+
+    .contato {
+      display: none;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .contato a {
+      display: inline-block;
+      padding: 10px 20px;
+      background: green;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    .google-form {
+      margin-top: 15px;
+    }
+
+    .google-form a {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #db4437;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    .google-form a:hover {
+      background: #b03025;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Calculadora de Valuation</h2>
+
+    <label for="receita">Receita Anual (R$)</label>
+    <input type="number" id="receita" placeholder="Ex: 1000000" required>
+
+    <label for="lucro">Lucro Líquido Anual (R$)</label>
+    <input type="number" id="lucro" placeholder="Ex: 200000" required>
+
+    <label for="setor">Setor</label>
+    <select id="setor">
+      <option value="tecnologia">Tecnologia</option>
+      <option value="varejo">Varejo</option>
+      <option value="serviços">Serviços</option>
+      <option value="outro">Outro</option>
+    </select>
+
+    <button onclick="calcular()">Calcular</button>
+
+    <div class="valuation" id="resultado"></div>
+
+    <div class="contato" id="contato">
+      <p>Quer uma análise mais detalhada da sua empresa?</p>
+      <div class="google-form">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScAdT3F6MCWHHwyuiBDx8b2eiTSR4p4gIGBDrAhY-qYu4UGFA/viewform?usp=dialog" target="_blank">
+          Preencher formulário de contato
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let valuationCalculado = 0;
+
+    function calcular() {
+      const receita = parseFloat(document.getElementById('receita').value);
+      const lucro = parseFloat(document.getElementById('lucro').value);
+      const setor = document.getElementById('setor').value;
+
+      if (isNaN(receita) || isNaN(lucro)) {
+        alert("Preencha corretamente a receita e o lucro.");
+        return;
+      }
+
+      let multiplo = 5;
+      if (setor === "tecnologia") multiplo = 8;
+      else if (setor === "serviços") multiplo = 6;
+      else if (setor === "varejo") multiplo = 4;
+
+      valuationCalculado = lucro * multiplo;
+
+      const resultado = document.getElementById('resultado');
+      resultado.style.display = 'block';
+      resultado.innerHTML = `<h3>Valuation Estimado:</h3><p>R$ ${valuationCalculado.toLocaleString('pt-BR')}</p>`;
+
+      document.getElementById('contato').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
